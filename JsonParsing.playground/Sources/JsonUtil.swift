@@ -13,12 +13,12 @@ public struct JsonUtil {
     static let arrayKey = "items"
     
     /// Convert the given model object into a JSON-based Data object.
-    static func toData<Model: Encodable>(model: Model) -> Data? {
+    public static func toData<Model: Encodable>(model: Model) -> Data? {
         return try? JSONEncoder().encode(model)
     }
     
     /// Convert the given json object into a model object.
-    static func toModel<Model: Decodable>(json: Json) -> Model? {
+    public static func toModel<Model: Decodable>(json: Json) -> Model? {
         
         guard let jsonData = try? JSONSerialization.data(withJSONObject: json, options: []) else {
             print("Error: Could not convert a JSON object to a Data object.")
@@ -29,7 +29,7 @@ public struct JsonUtil {
     }
     
     /// Convert the given JSON-based Data object into a model object.
-    static func toModel<Model: Decodable>(jsonData: Data) -> Model? {
+    public static func toModel<Model: Decodable>(jsonData: Data) -> Model? {
         
         let decoder = JSONDecoder()
         do {
@@ -55,14 +55,14 @@ public struct JsonUtil {
     }
     
     /// Convert the given model object into a JSON string.
-    static func toString<Model: Encodable>(model: Model) -> String? {
+    public static func toString<Model: Encodable>(model: Model) -> String? {
         
         guard let jsonData = toData(model: model) else { return nil }
         return String(data: jsonData, encoding: .utf8)
     }
     
     /// Convert the given JSON object into the string equivalent.
-    static func toString(json: Json) -> String? {
+    public static func toString(json: Json) -> String? {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: json,
                                                       options: JSONSerialization.WritingOptions.prettyPrinted)
@@ -76,21 +76,21 @@ public struct JsonUtil {
     }
     
     /// Convert the given model object into a JSON object.
-    static func toJson<Model: Encodable>(model: Model) -> Json? {
+    public static func toJson<Model: Encodable>(model: Model) -> Json? {
         
         guard let jsonData = toData(model: model) else { return nil }
         return toJson(data: jsonData)
     }
     
     /// Convert the given JSON-based Data object into a JSON object.
-    static func toJson(data: Data) -> Json? {
+    public static func toJson(data: Data) -> Json? {
         
         let json = try? JSONSerialization.jsonObject(with: data, options: [])
         return json as? Json
     }
     
     /// Convert the given JSON string into a JSON object.
-    static func toJson(jsonString: String) -> Json? {
+    public static func toJson(jsonString: String) -> Json? {
         
         guard let jsonData = jsonString.data(using: .utf8) else { return nil }
         return toJson(data: jsonData)
