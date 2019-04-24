@@ -219,6 +219,36 @@ if let model: ComplexModel = convert(json: complexJson) {
 
 
 
+
+
+
+
+print("\n\n\n\n***** Custom property names *****\n")
+
+let json: Json = ["first_name": "Ash",
+                  "last_name": "Williams"]
+
+struct Name: Codable {
+    var firstName: String
+    var lastName: String
+
+    enum CodingKeys: String, CodingKey {
+        case firstName = "first_name"
+        case lastName = "last_name"
+    }
+}
+
+if let model: Name = convert(json: json) {
+    print("   \(model)")
+}
+
+
+
+
+
+
+
+
 var simpleJsonString = """
 {
 "firstName" : "Ash",
